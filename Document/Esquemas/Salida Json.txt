@@ -1,0 +1,7 @@
+{
+  "responsive": {
+    "code": Number,
+    "messaje": Text
+  },
+  "data": [Object] / Null
+}
