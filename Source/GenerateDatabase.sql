@@ -131,6 +131,13 @@ BEGIN
       FROM `uni_dw_eventos`.`usuarios`
       WHERE (`documento` = UPPER(document_param));
 END $$
+CREATE PROCEDURE `uni_dw_eventos`.`usuarios.getById`(
+  IN id_param INT)
+BEGIN
+	SELECT `idusuario`, `documento`, `nombre`, `alias`, `contrasena`, `activo`
+      FROM `uni_dw_eventos`.`usuarios`
+      WHERE (`idusuario` = id_param);
+END $$
 CREATE PROCEDURE `uni_dw_eventos`.`usuarios.getByNick`(
   IN nick_param VARCHAR(45))
 BEGIN
@@ -144,6 +151,9 @@ CREATE PROCEDURE `uni_dw_eventos`.`usuarios.setAllowed`(
 BEGIN
 	UPDATE `uni_dw_eventos`.`usuarios`
       SET `activo` = allowed_param
+      WHERE (`idusuario` = id_param);
+	SELECT `idusuario`, `documento`, `nombre`, `alias`, `contrasena`, `activo`
+      FROM `uni_dw_eventos`.`usuarios`
       WHERE (`idusuario` = id_param);
 END $$
 DELIMITER ;

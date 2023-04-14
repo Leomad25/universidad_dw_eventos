@@ -3,14 +3,14 @@
 class GenerateResponsive
 {
     private ?Responsive $responsive = null;
-    private ?object $data = null;
+    private ?array $data = null;
 
     public function __construct()
     {
         $this->generateResponsive(null, null, null);
     }
 
-    public function generateResponsive(?int $code, ?string $message, ?object $data)
+    public function generateResponsive(?int $code, ?string $message, ?array $data)
     {
         if ($data != null)
         {
