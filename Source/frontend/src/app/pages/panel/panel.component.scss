@@ -1,0 +1,92 @@
+.header {
+    height: 80px;
+    z-index: 2;
+    
+    .nav-button, .nav-profile {
+        width: 50px;
+        cursor: pointer;
+        overflow: hidden;
+    }
+
+    .nav-button:hover, .nav-profile:hover {
+        background-color: rgba(200, 200, 200, .1);
+    }
+
+    .nav-button {
+        padding-left: 15px;
+        padding-right: 25px;
+        border-top-right-radius: 25px;
+        border-bottom-right-radius: 25px;
+    }
+
+    .nav-profile {
+        padding-right: 15px;
+        padding-left: 25px;
+        border-top-left-radius: 25px;
+        border-bottom-left-radius: 25px;
+    }
+
+    h1 {
+        margin: 0 !important;
+        cursor: default;
+    }
+}
+
+.body {
+    z-index: 1;
+    height: calc(100vh - 80px);
+    overflow: hidden;
+
+    .nav-menu {
+        top: 0;
+        left: 0;
+        width: 90%;
+        max-width: 300px;
+        max-height: 100%;
+        overflow: hidden;
+        transform: translateX(calc(-100% - 8px));
+
+        .nav-menu-body {
+            padding: 15px 10px;
+
+            h2 {
+                margin: 0 !important;
+                font-size: 2rem;
+            }
+
+            .nav-menu-buttons {
+                border-top: 2px black solid;
+                padding-top: 10px;
+            }
+        }
+    }
+
+    .nav-profile {
+        top: 0;
+        right: 0;
+        width: 90%;
+        max-width: 300px;
+        max-height: 100%;
+        overflow: hidden;
+        transform: translateX(100%);
+
+        .nav-profile-body {
+            padding: 15px 10px;
+
+            h2 {
+                margin: 0 !important;
+                font-size: 2rem;
+            }
+
+            .nav-profile-buttons {
+                border-top: 2px black solid;
+                padding-top: 10px;
+            }
+        }
+    }
+
+    .container {
+        top: 0;
+        left: 0;
+    }
+}

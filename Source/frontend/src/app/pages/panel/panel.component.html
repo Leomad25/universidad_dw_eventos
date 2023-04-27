@@ -1,1 +1,47 @@
-<p>panel works!</p>
+<div class="header width-full position-relative background-color-tranparent box-shadow">
+    <div class="width-full height-full font-color-white display-inline-flex">
+        <div class="nav-button display-flex height-full"
+            (click)="alterPanelMenu()">
+            <img class="width-full"
+                src="assets/menu.svg">
+        </div>
+        <div class="title display-flex width-full height-full">
+            <div class="width-full align-items-center">
+                <h1 class="width-full text-center">Events</h1>
+            </div>
+        </div>
+        <div class="nav-profile display-flex height-full"
+            (click)="alterPanelProfile()">
+            <img class="width-full"
+                src="assets/user.svg">
+        </div>
+    </div>
+</div>
+<div class="body width-full position-relative">
+    <div class="container width-full height-full">
+        
+    </div>
+    <div class="nav-menu position-absolute background-color-main box-shadow"
+        [@menuPanelAnimation]="menuPanelStatus?'open':'close'">
+        <div class="nav-menu-body position-relative">
+            <h2>Panel</h2>
+            <div class="nav-menu-buttons">
+            </div>
+        </div>
+    </div>
+    <div class="nav-profile position-absolute background-color-main box-shadow"
+        [@profilePanelAnimation]="profilePanelStatus?'open':'close'">
+        <div class="nav-profile-body position-relative">
+            <h2>Welcome</h2>
+            <p>{{userData.nick}}</p>
+            <div class="nav-profile-buttons">
+                <button class="width-full"
+                    mat-raised-button
+                    color="primary"
+                    (click)="clickOnLogOut()">
+                    Log out
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

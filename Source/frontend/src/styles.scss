@@ -7,7 +7,9 @@
   font-family: 'Nova Oval', 'Times New Roman', Times, serif !important;
 }
 
-html, body { height: 100%; }
+html, body {
+  height: 100%;
+}
 
 .width-full {
   width: 100% !important;
@@ -38,6 +40,7 @@ html, body { height: 100%; }
 
 .text-center {
   text-align: center !important;
+  font-size: 60px !important;
 }
 
 .background-color-tranparent {
@@ -58,6 +61,10 @@ html, body { height: 100%; }
 
 .position-relative {
   position: relative !important;
+}
+
+.position-absolute {
+  position: absolute;
 }
 
 .display-flex {

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { trigger, style, transition, animate, state } from '@angular/animations'
+import { trigger, style, transition, animate, state } from '@angular/animations';
 
 @Component({
   selector: 'app-loading',
