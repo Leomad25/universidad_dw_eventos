@@ -274,6 +274,13 @@ BEGIN
       FROM `uni_dw_eventos`.`roles`
       WHERE (`idrole` = id_param);
 END $$
+CREATE PROCEDURE `uni_dw_eventos`.`roles.getByTag`(
+  IN tag_param VARCHAR(45))
+BEGIN
+	SELECT `idrole`, `etiqueta`, `peso`
+      FROM `uni_dw_eventos`.`roles`
+      WHERE (`etiqueta` = UPPER(tag_param));
+END $$
 DELIMITER ;
 
 -- -----------------------------------------------------
@@ -321,6 +328,9 @@ DELIMITER ;
 CALL `uni_dw_eventos`.`roles.create`('administrador', 9);
 CALL `uni_dw_eventos`.`roles.create`('creador', 5);
 CALL `uni_dw_eventos`.`roles.create`('asistente', 1);
+
+CALL `uni_dw_eventos`.`usuarios.create`('0000000000', 'admin', 'admin', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4');
+CALL `uni_dw_eventos`.`roles_usuarios.create`(1, 1);
 
 /*
 -- -----------------------------------------------------

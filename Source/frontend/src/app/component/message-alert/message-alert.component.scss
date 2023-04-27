@@ -1,0 +1,38 @@
+.content {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    .card {
+        width: 80%;
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 25px;
+        padding: 15px 10px;
+
+        .title {
+            border-bottom: 2px black solid;
+            padding-top: 5px;
+            padding-bottom: 10px;
+
+            h2 {
+                font-size: 2rem;
+                margin: 0 !important;
+            }
+
+            .close {
+                margin-left: 8px;
+            }
+        }
+
+        .body {
+            margin-top: 10px;
+
+            p {
+                font-size: 1.2rem;
+            }
+        }
+    }
+}

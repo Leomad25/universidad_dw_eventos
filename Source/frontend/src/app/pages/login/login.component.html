@@ -1,0 +1,55 @@
+<div class="width-full height-full">
+    <form class="form-card absolute-center" [formGroup]="form">
+        <h1>Login from</h1>
+        <div class="input-container width-full">
+            <div class="input-item">
+                <mat-form-field class="width-full">
+                    <mat-label>Username</mat-label>
+                    <input
+                        matInput
+                        [pattern]="'^[a-zA-Z0-9]*$'"
+                        formControlName="username">
+                    <mat-error *ngIf="form.controls['username'].hasError('required')">
+                        This field is requiered
+                    </mat-error>
+                    <mat-error *ngIf="form.controls['username'].hasError('pattern')">
+                        Only is accept: a-z, A-Z, 0-9
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="input-item">
+                <mat-form-field class="width-full">
+                    <mat-label>Password</mat-label>
+                    <input
+                        matInput
+                        formControlName="password"
+                        type="password">
+                    <mat-error *ngIf="form.controls['password'].hasError('required')">
+                        This field is requiered
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="button-form width-full text-center">
+            <button class="width-80-percent"
+                mat-raised-button
+                color="primary"
+                [disabled]="form.invalid"
+                (click)="onLoginClick()">
+                Login
+            </button>
+        </div>
+        <div class="redirect-form text-center">
+            <a routerLink="/auth/register">Create my account</a>
+        </div>
+    </form>
+</div>
+<app-message-alert
+    [isErrorMessage]="true"
+    [isVisible]="errorScreenActive"
+    [message]="[errorScreenMessage]"
+    (onClose)="onCloseErrScreen()">
+</app-message-alert>
+<app-loading
+    [isVisible]="loadingScreenActive">
+</app-loading>

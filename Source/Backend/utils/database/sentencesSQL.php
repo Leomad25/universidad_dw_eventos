@@ -17,11 +17,15 @@ class SentencesSQL
         return $conn->prepare($sql);
     }
 
-    public function getResult(PDOStatement $sentence): array
+    public function getResult(PDOStatement $sentence): array|string
     {
-        $sentence->execute();
-        $sentence->setFetchMode(PDO::FETCH_ASSOC);
-        return $sentence->fetchAll();
+        try {
+            $sentence->execute();
+            $sentence->setFetchMode(PDO::FETCH_ASSOC);
+            return $sentence->fetchAll();
+        } catch(PDOException $err) {
+            return $err->getMessage();
+        }
     }
 }
 
@@ -34,7 +38,7 @@ class UserSentencesSQL
         $this->sentencesSQL = $sentencesSQL;
     }
 
-    public function createUser(string $document, string $name, string $nick, string $pass): array
+    public function createUser(string $document, string $name, string $nick, string $pass): array|string
     {
         $sql = 'CALL `uni_dw_eventos`.`usuarios.create`(:document, :name, :nick, :pass)';
         $sentence = $this->sentencesSQL->createSentence($sql);
@@ -45,7 +49,7 @@ class UserSentencesSQL
         return $this->sentencesSQL->getResult($sentence);
     }
 
-    public function getUserById(int $id): array
+    public function getUserById(int $id): array|string
     {
         $sql = 'CALL `uni_dw_eventos`.`usuarios.getById`(:id)';
         $sentence = $this->sentencesSQL->createSentence($sql);
@@ -53,7 +57,7 @@ class UserSentencesSQL
         return $this->sentencesSQL->getResult($sentence);
     }
 
-    public function getUserByNick(string $nick): array
+    public function getUserByNick(string $nick): array|string
     {
         $sql = 'CALL `uni_dw_eventos`.`usuarios.getByNick`(:nick)';
         $sentence = $this->sentencesSQL->createSentence($sql);
@@ -61,12 +65,49 @@ class UserSentencesSQL
         return $this->sentencesSQL->getResult($sentence);
     }
 
-    public function allowedUser(int $id, bool $status): array
+    public function allowedUser(int $id, bool $status): array|string
     {
         $sql = 'CALL `uni_dw_eventos`.`usuarios.setAllowed`(:id, :status)';
         $sentence = $this->sentencesSQL->createSentence($sql);
         $sentence->bindValue(':id', $id, PDO::PARAM_INT);
         $sentence->bindValue(':status', $status, PDO::PARAM_BOOL);
+        return $this->sentencesSQL->getResult($sentence);
+    }
+}
+
+class RolesUsersSentencesSQL
+{
+    private ?SentencesSQL $sentencesSQL = null;
+
+    public function __construct(SentencesSQL $sentencesSQL)
+    {
+        $this->sentencesSQL = $sentencesSQL;
+    }
+
+    public function createRoleUser(int $userId, int $roleId): array|string
+    {
+        $sql = 'CALL `uni_dw_eventos`.`roles_usuarios.create`(:userId, :roleId)';
+        $sentence = $this->sentencesSQL->createSentence($sql);
+        $sentence->bindValue(':userId', $userId, PDO::PARAM_INT);
+        $sentence->bindValue(':roleId', $roleId, PDO::PARAM_INT);
+        return $this->sentencesSQL->getResult($sentence);
+    }
+}
+
+class RolesSentencesSQL
+{
+    private ?SentencesSQL $sentencesSQL = null;
+
+    public function __construct(SentencesSQL $sentencesSQL)
+    {
+        $this->sentencesSQL = $sentencesSQL;
+    }
+
+    public function getRoleByTag(string $tag): array|string
+    {
+        $sql = 'CALL `uni_dw_eventos`.`roles.getByTag`(:tag)';
+        $sentence = $this->sentencesSQL->createSentence($sql);
+        $sentence->bindValue(':tag', $tag, PDO::PARAM_STR);
         return $this->sentencesSQL->getResult($sentence);
     }
 }

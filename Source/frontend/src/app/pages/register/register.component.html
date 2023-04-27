@@ -1,0 +1,106 @@
+<div class="width-full height-full">
+    <form class="form-card absolute-center" [formGroup]="form">
+        <h1>Register from</h1>
+        <div class="input-container">
+            <div class="input-item">
+                <mat-form-field class="width-full">
+                    <mat-label>Document</mat-label>
+                    <input
+                        matInput
+                        [pattern]="'^[0-9]*$'"
+                        formControlName="document">
+                    <mat-error *ngIf="form.controls['document'].hasError('required')">
+                        This field is requiered
+                    </mat-error>
+                    <mat-error *ngIf="form.controls['document'].hasError('pattern')">
+                        Only is accept: 0-9
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="input-item">
+                <mat-form-field class="width-full">
+                    <mat-label>Full name</mat-label>
+                    <input
+                        matInput
+                        [pattern]="'^[a-zA-Z ]*$'"
+                        formControlName="fullname">
+                    <mat-error *ngIf="form.controls['fullname'].hasError('required')">
+                        This field is requiered
+                    </mat-error>
+                    <mat-error *ngIf="form.controls['fullname'].hasError('pattern')">
+                        Only is accept: a-z, A-Z and Space
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="input-item">
+                <mat-form-field class="width-full">
+                    <mat-label>Username</mat-label>
+                    <input
+                        matInput
+                        [pattern]="'^[a-zA-Z0-9]*$'"
+                        formControlName="username">
+                    <mat-error *ngIf="form.controls['username'].hasError('required')">
+                        This field is requiered
+                    </mat-error>
+                    <mat-error *ngIf="form.controls['username'].hasError('pattern')">
+                        Only is accept: a-z, A-Z and 0-9
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="input-item">
+                <mat-form-field class="width-full">
+                    <mat-label>Password</mat-label>
+                    <input
+                        matInput
+                        formControlName="password"
+                        type="password">
+                    <mat-error *ngIf="form.controls['password'].hasError('required')">
+                        This field is requiered
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="input-item">
+                <mat-form-field class="width-full">
+                    <mat-label>Password Confirm</mat-label>
+                    <input
+                        matInput
+                        formControlName="passwordConfirm"
+                        type="password">
+                    <mat-error *ngIf="form.controls['passwordConfirm'].hasError('required')">
+                        This field is requiered
+                    </mat-error>
+                    <mat-error *ngIf="form.controls['passwordConfirm'].hasError('matchPassword')">
+                        Password not mach
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="button-form width-full">
+            <button class="width-full"
+                mat-raised-button
+                color="primary"
+                [disabled]="form.invalid"
+                (click)="onLoginClick()">
+                Register
+            </button>
+        </div>
+        <div class="redirect-form text-center">
+            <a routerLink="/auth/login">I'm already account</a>
+        </div>
+    </form>
+</div>
+<app-message-alert
+    [isSuccessMessage]="true"
+    [isVisible]="successScreenActive"
+    [message]="successScreenMessage"
+    (onClose)="onCloseSuccessAlert()">
+</app-message-alert>
+<app-message-alert
+    [isErrorMessage]="true"
+    [isVisible]="errorScreenActive"
+    [message]="errorScreenMessage"
+    (onClose)="onCloseErrScreen()">
+</app-message-alert>
+<app-loading
+    [isVisible]="loadingScreenActive">
+</app-loading>

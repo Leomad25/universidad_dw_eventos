@@ -1,0 +1,8 @@
+<div class="background width-full height-full background-color-tranparent" *ngIf="isVisible">
+    <div class="card absolute-center background-color-main box-shadow">
+        <img class="width-full"
+            [@rotateAnimation]="state"
+            (@rotateAnimation.done)="resetAnimation($event)"
+            src="assets/loadingIcon.svg">
+    </div>
+</div>

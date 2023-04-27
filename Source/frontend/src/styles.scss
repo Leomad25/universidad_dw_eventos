@@ -1,0 +1,90 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Nova+Oval&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Nova Oval', 'Times New Roman', Times, serif !important;
+}
+
+html, body { height: 100%; }
+
+.width-full {
+  width: 100% !important;
+}
+
+.height-full {
+  height: 100% !important;
+}
+
+.width-80-percent {
+  width: 80% !important;
+}
+
+.width-40 {
+  width: 40px !important;
+}
+
+.height-40 {
+  height: 40px !important;
+}
+
+.absolute-center {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translateX(-50%) translateY(-50%) !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.background-color-tranparent {
+  background-color: rgba(50, 50, 50, .6) !important;
+}
+
+.background-color-main {
+  background-color: rgba(220, 220, 220, .8) !important;
+}
+
+.font-color-white {
+  color: white !important;
+}
+
+.box-shadow {
+  box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.2) !important;
+}
+
+.position-relative {
+  position: relative !important;
+}
+
+.display-flex {
+  display: flex !important;
+}
+
+.display-inline {
+  display: inline !important;
+}
+
+.display-inline-flex {
+  display: inline-flex !important;
+}
+
+.card-main {
+  padding: 15px;
+  border-radius: 25px;
+  border: 2px black solid;
+  max-height: 80%;
+  overflow: hidden;
+  overflow-y: auto;
+}
+.card-main::-webkit-scrollbar {
+  width: 0;
+}
+
+.align-items-center {
+  display: flex !important;
+  align-items: center !important;
+}

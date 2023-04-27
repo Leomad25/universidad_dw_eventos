@@ -4,11 +4,6 @@ include "generalResponsive.php";
 include "database/connection.php";
 include "database/sentencesSQL.php";
 
-class User
-{
-
-}
-
 class UserService
 {
     private function validateUserExistsById(UserSentencesSQL $userSentences, int $id): bool

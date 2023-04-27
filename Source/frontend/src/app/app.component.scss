@@ -1,0 +1,17 @@
+.backgound-pages {
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(45deg, rgba(0,5,96,1) 0%, rgba(9,9,121,1) 21%, rgba(0,164,255,1) 72%);
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.content-body {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow-y: auto;
+}
