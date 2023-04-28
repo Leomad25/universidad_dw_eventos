@@ -31,7 +31,17 @@ function isValidJWT(string $jwt): bool|string
     } catch (Exception $err) {
         return $err->getMessage();
     }
-    
+}
+
+function getIdUserFromToken(string $jwt): int|string
+{
+    $jwt = str_replace('Bearer ', '', $jwt);
+    try {
+        $data = JWT::decode($jwt, new Key(getJwtKey(), 'HS256'));
+        return $data->data->iduser;
+    } catch (Exception $err) {
+        return $err->getMessage();
+    }
 }
 
 ?>

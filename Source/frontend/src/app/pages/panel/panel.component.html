@@ -33,7 +33,8 @@
         [@profilePanelAnimation]="profilePanelStatus?'open':'close'">
         <div class="nav-profile-body position-relative">
             <h2>Welcome</h2>
-            <p>{{userData.nick}}</p>
+            <p>{{userData?.fullname}}</p>
+            <p class="role-text">{{userData?.role?.tag}}</p>
             <div class="nav-profile-buttons">
                 <button class="width-full"
                     mat-raised-button
@@ -45,3 +46,12 @@
         </div>
     </div>
 </div>
+<app-message-alert
+    [isErrorMessage]="true"
+    [isVisible]="errMessage.isVisible"
+    [message]="errMessage.message"
+    (onClose)="onCloseErrScreen()">
+</app-message-alert>
+<app-loading
+    [isVisible]="loadingScreenActive">
+</app-loading>

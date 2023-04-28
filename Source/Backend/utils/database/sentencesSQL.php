@@ -92,6 +92,14 @@ class RolesUsersSentencesSQL
         $sentence->bindValue(':roleId', $roleId, PDO::PARAM_INT);
         return $this->sentencesSQL->getResult($sentence);
     }
+
+    public function getRoleIdByIdUser(int $userId): array|string
+    {
+        $sql = 'CALL `uni_dw_eventos`.`roles_usuarios.getByUser`(:userId)';
+        $sentence = $this->sentencesSQL->createSentence($sql);
+        $sentence->bindValue(':userId', $userId, PDO::PARAM_INT);
+        return $this->sentencesSQL->getResult($sentence);
+    }
 }
 
 class RolesSentencesSQL
@@ -108,6 +116,14 @@ class RolesSentencesSQL
         $sql = 'CALL `uni_dw_eventos`.`roles.getByTag`(:tag)';
         $sentence = $this->sentencesSQL->createSentence($sql);
         $sentence->bindValue(':tag', $tag, PDO::PARAM_STR);
+        return $this->sentencesSQL->getResult($sentence);
+    }
+
+    public function getRoleById(int $idRole): array|string
+    {
+        $sql = 'CALL `uni_dw_eventos`.`roles.getById`(:idRole)';
+        $sentence = $this->sentencesSQL->createSentence($sql);
+        $sentence->bindValue(':idRole', $idRole, PDO::PARAM_INT);
         return $this->sentencesSQL->getResult($sentence);
     }
 }

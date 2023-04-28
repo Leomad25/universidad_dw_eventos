@@ -33,9 +33,7 @@ export class TokenService {
 
     isValid(jwt: string|null): Observable<any>
     {
-        const headers = new HttpHeaders({
-            'Authorization': 'Bearer ' + jwt
-        })
+        const headers = new HttpHeaders({'Authorization': 'Bearer ' + jwt})
         return this.http.get(this.url, { headers: headers });
     }
   }

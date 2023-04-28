@@ -76,6 +76,18 @@
             h2 {
                 margin: 0 !important;
                 font-size: 2rem;
+                text-align: right;
+            }
+
+            p {
+                text-align: right;
+                margin: 5px 0px !important;
+                text-transform: lowercase !important;
+            }
+
+            .role-text {
+                color: rgb(0, 0, 200);
+                font-size: 1.2rem;
             }
 
             .nav-profile-buttons {
