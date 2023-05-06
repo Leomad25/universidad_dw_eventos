@@ -1,7 +1,7 @@
 <div class="header width-full position-relative background-color-tranparent box-shadow">
     <div class="width-full height-full font-color-white display-inline-flex">
         <div class="nav-button display-flex height-full"
-            (click)="alterPanelMenu()">
+            (click)="alterPanelMenu(); closeAllPanelMenuItems('');">
             <img class="width-full"
                 src="assets/menu.svg">
         </div>
@@ -18,18 +18,106 @@
     </div>
 </div>
 <div class="body width-full position-relative">
-    <div class="container width-full height-full">
-        
-    </div>
-    <div class="nav-menu position-absolute background-color-main box-shadow"
+    <div class="nav-menu position-absolute background-color-main box-shadow z-index-50"
         [@menuPanelAnimation]="menuPanelStatus?'open':'close'">
         <div class="nav-menu-body position-relative">
             <h2>Panel</h2>
-            <div class="nav-menu-buttons">
+            <div class="nav-menu-buttons width-full">
+                <button class="width-full"
+                        mat-raised-button
+                        color="primary"
+                        (click)="clickOnHome()"
+                        [disabled]="panelsMainControl.home">
+                        Home page
+                    </button>
+                <div class="spliter-16"></div>
+                <mat-expansion-panel class = "background-color-tranparent"
+                    *ngIf="panelNavControl.administration.isEnable"
+                    [(expanded)]="panelNavControl.administration.isOpen"
+                    (click)="closeAllPanelMenuItems('administration')">
+                    <mat-expansion-panel-header>
+                    <mat-panel-title class = "font-color-white">
+                        Administration
+                    </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="spliter-16"></div>
+                    <button class="width-full"
+                        mat-raised-button
+                        color="primary"
+                        (click)="clickOnAdministrationUserManager()"
+                        [disabled]="panelsMainControl.admin.userManager">
+                        User manager
+                    </button>
+                </mat-expansion-panel>
+                <div class="spliter-16" *ngIf="panelNavControl.administration.isEnable"></div>
+                <mat-expansion-panel class = "background-color-tranparent"
+                    *ngIf="panelNavControl.eventManagement.isEnable"
+                    [(expanded)]="panelNavControl.eventManagement.isOpen"
+                    (click)="closeAllPanelMenuItems('eventManagement')">
+                    <mat-expansion-panel-header>
+                    <mat-panel-title class = "font-color-white">
+                        Event management
+                    </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="spliter-16"></div>
+                    <button class="width-full"
+                        mat-raised-button
+                        color="primary"
+                        (click)="clickOnEventManagerCreateByMe()"
+                        [disabled]="panelsMainControl.eventManager.createByMe">
+                        Created by me
+                    </button>
+                    <div class="spliter-16"></div>
+                    <button class="width-full"
+                        mat-raised-button
+                        color="primary"
+                        (click)="clickOnEventManagerCreate()"
+                        [disabled]="panelsMainControl.eventManager.create">
+                        Create event
+                    </button>
+                </mat-expansion-panel>
+                <div class="spliter-16" *ngIf="panelNavControl.eventManagement.isEnable"></div>
+                <mat-expansion-panel class = "background-color-tranparent"
+                    *ngIf="panelNavControl.personalEvents.isEnable"
+                    [(expanded)]="panelNavControl.personalEvents.isOpen"
+                    (click)="closeAllPanelMenuItems('personalEvents')">
+                    <mat-expansion-panel-header>
+                    <mat-panel-title class = "font-color-white">
+                        Personal events
+                    </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="spliter-16"></div>
+                    <button class="width-full"
+                        mat-raised-button
+                        color="primary"
+                        (click)="clickOnPersonalMyInterested()"
+                        [disabled]="panelsMainControl.personal.myInterested">
+                        My interested events
+                    </button>
+                </mat-expansion-panel>
+                <div class="spliter-16" *ngIf="panelNavControl.personalEvents.isEnable"></div>
+                <mat-expansion-panel class = "background-color-tranparent"
+                    *ngIf="panelNavControl.diary.isEnable"
+                    [(expanded)]="panelNavControl.diary.isOpen"
+                    (click)="closeAllPanelMenuItems('diary')">
+                    <mat-expansion-panel-header>
+                    <mat-panel-title class = "font-color-white">
+                        Diary
+                    </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="spliter-16"></div>
+                    <button class="width-full"
+                        mat-raised-button
+                        color="primary"
+                        (click)="clickOnDialyExplore()"
+                        [disabled]="panelsMainControl.diary.explore">
+                        Explore events
+                    </button>
+                </mat-expansion-panel>
             </div>
         </div>
     </div>
-    <div class="nav-profile position-absolute background-color-main box-shadow"
+    <div class="nav-profile position-absolute background-color-main box-shadow z-index-50"
         [@profilePanelAnimation]="profilePanelStatus?'open':'close'">
         <div class="nav-profile-body position-relative">
             <h2>Welcome</h2>
@@ -45,7 +133,39 @@
             </div>
         </div>
     </div>
+    <div class="container width-full height-full z-index-10">
+        <div class="container-panels position-relative background-color-tranparent-low font-color-white height-full width-full">
+            <app-panel-home *ngIf="panelsMainControl.home"></app-panel-home>
+            <app-user-manager *ngIf="panelsMainControl.admin.userManager"
+                [iduser]="userData?.iduser"
+                (onError)="showError($event)"
+                (onSuccess)="showSuccess($event)"
+                (onLoading)="showLoadingScreen($event)">
+            </app-user-manager>
+            <app-create-by-me *ngIf="panelsMainControl.eventManager.createByMe"
+                [idEventSelected]="idEventCreatedSelected"
+                (onError)="showError($event)"
+                (onSuccess)="showSuccess($event)"
+                (onLoading)="showLoadingScreen($event)">
+            </app-create-by-me>
+            <app-create *ngIf="panelsMainControl.eventManager.create"
+                [iduser]="userData?.iduser"
+                (onError)="showError($event)"
+                (onSuccess)="showSuccess($event)"
+                (onLoading)="showLoadingScreen($event)"
+                (onRedirect)="clickOnEventManagerCreateByMe($event)">
+            </app-create>
+            <app-my-interested *ngIf="panelsMainControl.personal.myInterested"></app-my-interested>
+            <app-explore *ngIf="panelsMainControl.diary.explore"></app-explore>
+        </div>
+    </div>
 </div>
+<app-message-alert
+    [isSuccessMessage]="true"
+    [isVisible]="successMessage.isVisible"
+    [message]="successMessage.message"
+    (onClose)="onCloseSuccessScreen()">
+</app-message-alert>
 <app-message-alert
     [isErrorMessage]="true"
     [isVisible]="errMessage.isVisible"

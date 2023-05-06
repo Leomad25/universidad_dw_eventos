@@ -1,0 +1,83 @@
+<div class="user-manager-background margin-15px">
+    <h2>{{title}}</h2>
+    <div class="spliter-16"></div>
+    <div class="users-panel width-full">
+        <div class="user-panel-lorem width-full">
+            <p>Select the user to edit:</p>
+        </div>
+        <form [formGroup]="form">
+            <mat-form-field class="width-full">
+                <mat-label>Username</mat-label>
+                <input type="text"
+                    placeholder="Example: Juanito"
+                    formControlName="nickname"
+                    matInput
+                    [matAutocomplete]="auto"
+                    (ngModelChange)="validateUsername()">
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let item of usersList" [value]="item">{{item}}</mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </form>
+    </div>
+    <div class="spliter-16"></div>
+    <div class="user-edit background-color-tranparent">
+        <h2>Edit User</h2>
+        <div class="user-not-found text-center" *ngIf="!userIsValid">
+            <p>User Not Found</p>
+            <p>Write up the nickname to user for edit</p>
+        </div>
+        <div class="user-found text-center" *ngIf="userIsValid">
+            <div class="spliter-16"></div>
+            <p class="text-left">Id user</p>
+            <p class="text-right">{{userInfo?.iduser}}</p>
+            <div class="spliter-16"></div>
+            <p class="text-left">Document</p>
+            <p class="text-right">{{userInfo?.document}}</p>
+            <div class="spliter-16"></div>
+            <p class="text-left">Nickname</p>
+            <p class="text-right">{{userInfo?.nick}}</p>
+            <div class="spliter-16"></div>
+            <p class="text-left">Full name</p>
+            <p class="text-right">{{userInfo?.fullname}}</p>
+            <div class="spliter-16"></div>
+            <p class="text-left">Is active</p>
+            <p class="text-right">{{userInfo?.active?'ACTIVE':'DISABLE'}}</p>
+            <div class="spliter-16"></div>
+            <p class="text-left">Role</p>
+            <p class="text-right">{{userInfo?.role?.tag}}</p>
+        </div>
+        <div class="options-panels background-color-tranparent"
+            *ngIf="userIsValid">
+            <form
+                [formGroup]="formUpdateUser"
+                (ngSubmit)="sendformUser()">
+                <h2>Options panel</h2>
+                <div class="spliter-16"></div>
+                <mat-slide-toggle
+                    color="primary"
+                    (change)="userDataUpdate()"
+                    formControlName="isUserActive">
+                    <span class="font-color-white">Is user active?</span>
+                </mat-slide-toggle>
+                <div class="spliter-16"></div>
+                <mat-form-field class="width-full">
+                    <mat-label>Select Role</mat-label>
+                    <mat-select
+                        (selectionChange)="userDataUpdate()"
+                        formControlName="selectedRole">
+                        <mat-option value="0">--</mat-option>
+                        <mat-option *ngFor="let role of rolesList" value="{{role.id}}">{{role.tag}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <button
+                    mat-raised-button
+                    color="primary"
+                    type="submit"
+                    [disabled]="!formUpdateValid">
+                    Update
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

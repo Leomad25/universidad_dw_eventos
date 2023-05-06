@@ -5,7 +5,7 @@ include "../../utils/jwt/jwt.php";
 
 // cors
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST');
+header('Access-Control-Allow-Methods: GET');
 header("Access-Control-Allow-Headers: *");
 // cors
 
@@ -23,7 +23,7 @@ switch($_SERVER['REQUEST_METHOD'])
                 header('HTTP/1.1 200 OK');
                 $responsive->generateResponsive(null, null, ['isValid' => $valid]);
             } else {
-                header('HTTP/1.1 400 Bad Request');
+                header('HTTP/1.1 500 Internal Server Error');
                 $responsive->generateResponsive(-1, 'Err: '.$valid, null);
             }
         } else {

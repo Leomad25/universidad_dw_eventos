@@ -40,6 +40,117 @@ class UserService
         }
         return null;
     }
+
+    public function getUserByNickWhitRole(int $id, string $nick): int | array | string
+    {
+        if ($id > 0)
+        {
+            $database = new DatabaseConn();
+            if ($database->getConnection() != null)
+            {
+                $sentenceSQL = new SentencesSQL($database);
+                $userSentences = new UserSentencesSQL($sentenceSQL);
+                $roleUserSentences = new RolesUsersSentencesSQL($sentenceSQL);
+                $roleSentences = new RolesSentencesSQL($sentenceSQL);
+                
+                $result = $roleUserSentences->getRoleIdByIdUser($id);
+                if (is_string($result)) return $result;
+                $result = $result[0];
+                
+                $result = $roleSentences->getRoleById($result['idrole']);
+                if (is_string($result)) return $result;
+                $result = $result[0];
+
+                if ($result['peso'] != 9) return 'Err: ACCESS DENIED';
+                
+                $result = $userSentences->getUserByNickWhitRole($nick);
+                if (!is_string($result) && count($result) > 0) return $result[0];
+                return "Err: User not Found";
+            }
+        } else {
+            return -1;
+        }
+    }
+
+    public function getUsersByNick(int $id, string $nick): int | array | string
+    {
+        if ($id > 0)
+        {
+            $database = new DatabaseConn();
+            if ($database->getConnection() != null)
+            {
+                $sentenceSQL = new SentencesSQL($database);
+                $userSentences = new UserSentencesSQL($sentenceSQL);
+                $roleUserSentences = new RolesUsersSentencesSQL($sentenceSQL);
+                $roleSentences = new RolesSentencesSQL($sentenceSQL);
+                
+                $result = $roleUserSentences->getRoleIdByIdUser($id);
+                if (is_string($result)) return $result;
+                $result = $result[0];
+                
+                $result = $roleSentences->getRoleById($result['idrole']);
+                if (is_string($result)) return $result;
+                $result = $result[0];
+
+                if ($result['peso'] != 9) return 'Err: ACCESS DENIED';
+                
+                $result = $userSentences->getUsersByNick($nick);
+                return $result;
+            }
+        } else {
+            return -1;
+        }
+    }
+
+    public function setAllowedUser(int $iduser, bool $status): array | string
+    {
+        $database = new DatabaseConn();
+        if ($database->getConnection() != null)
+        {
+            $userSentences = new UserSentencesSQL(new SentencesSQL($database));
+            $result = $userSentences->setAllowedUser($iduser, $status);
+            return $result;
+        }
+    }
+}
+
+class RoleService {
+    public function getAllRoles(): array | string
+    {
+        $database = new DatabaseConn();
+        if ($database->getConnection() != null)
+        {
+            $roleSentences = new RolesSentencesSQL(new SentencesSQL($database));
+            $result = $roleSentences->getAllRoles();
+            return $result;
+        }
+    }
+}
+
+class RoleUserService {
+    public function changeRoleUser(int $iduser, int $idrole, int $asigned): array | string
+    {
+        $database = new DatabaseConn();
+        if ($database->getConnection() != null)
+        {
+            $roleUserSentences = new RolesUsersSentencesSQL(new SentencesSQL($database));
+            $result = $roleUserSentences->changueRoleUser($iduser, $idrole, $asigned);
+            return $result;
+        }
+    }
+}
+
+class EventService {
+    public function createEvent(string $name, string $description, int $manager, int $dateInit, int $dateEnd): array | string
+    {
+        $database = new DatabaseConn();
+        if ($database->getConnection() != null)
+        {
+            $eventsSentences = new EventsSentencesSQL(new SentencesSQL($database));
+            $result = $eventsSentences->createEvent($name, $description, $manager, $dateInit, $dateEnd);
+            return $result;
+        }
+    }
 }
 
 ?>

@@ -65,7 +65,23 @@ class UserSentencesSQL
         return $this->sentencesSQL->getResult($sentence);
     }
 
-    public function allowedUser(int $id, bool $status): array|string
+    public function getUserByNickWhitRole(string $nick): array|string
+    {
+        $sql = 'CALL `uni_dw_eventos`.`usuarios.getByNick.WhitRole`(:nick)';
+        $sentence = $this->sentencesSQL->createSentence($sql);
+        $sentence->bindParam(':nick', $nick);
+        return $this->sentencesSQL->getResult($sentence);
+    }
+
+    public function getUsersByNick(string $nick): array|string
+    {
+        $sql = 'CALL `uni_dw_eventos`.`usuarios.getUsersByNick`(:nick)';
+        $sentence = $this->sentencesSQL->createSentence($sql);
+        $sentence->bindValue(':nick', '%'.$nick.'%', PDO::PARAM_STR);
+        return $this->sentencesSQL->getResult($sentence);
+    }
+
+    public function setAllowedUser(int $id, bool $status): array|string
     {
         $sql = 'CALL `uni_dw_eventos`.`usuarios.setAllowed`(:id, :status)';
         $sentence = $this->sentencesSQL->createSentence($sql);
@@ -100,6 +116,16 @@ class RolesUsersSentencesSQL
         $sentence->bindValue(':userId', $userId, PDO::PARAM_INT);
         return $this->sentencesSQL->getResult($sentence);
     }
+
+    public function changueRoleUser(int $iduser, int $idrole, int $asigned): array|string
+    {
+        $sql = 'CALL `uni_dw_eventos`.`roles_usuarios.updateRole`(:iduser, :idrole, :asigned)';
+        $sentence = $this->sentencesSQL->createSentence($sql);
+        $sentence->bindValue(':iduser', $iduser, PDO::PARAM_INT);
+        $sentence->bindValue(':idrole', $idrole, PDO::PARAM_INT);
+        $sentence->bindValue(':asigned', $asigned, PDO::PARAM_INT);
+        return $this->sentencesSQL->getResult($sentence);
+    }
 }
 
 class RolesSentencesSQL
@@ -124,6 +150,37 @@ class RolesSentencesSQL
         $sql = 'CALL `uni_dw_eventos`.`roles.getById`(:idRole)';
         $sentence = $this->sentencesSQL->createSentence($sql);
         $sentence->bindValue(':idRole', $idRole, PDO::PARAM_INT);
+        return $this->sentencesSQL->getResult($sentence);
+    }
+
+    public function getAllRoles(): array|string
+    {
+        $sql = 'CALL `uni_dw_eventos`.`roles.getAll`()';
+        $sentence = $this->sentencesSQL->createSentence($sql);
+        return $this->sentencesSQL->getResult($sentence);
+    }
+}
+
+class EventsSentencesSQL
+{
+    private ?SentencesSQL $sentencesSQL = null;
+
+    public function __construct(SentencesSQL $sentencesSQL)
+    {
+        $this->sentencesSQL = $sentencesSQL;
+    }
+
+    public function createEvent(string $name, string $description, int $manager, int $dateInit, int $dateEnd): array|string
+    {
+        $sql = 'CALL `uni_dw_eventos`.`eventos.create`(:name, :description, :manager, :dateInit, :dateEnd, :timeInit, :timeEnd)';
+        $sentence = $this->sentencesSQL->createSentence($sql);
+        $sentence->bindValue(':name', $name, PDO::PARAM_STR);
+        $sentence->bindValue(':description', $description, PDO::PARAM_STR);
+        $sentence->bindValue(':manager', $manager, PDO::PARAM_STR);
+        $sentence->bindValue(':dateInit', date('Y-m-d', $dateInit), PDO::PARAM_STR);
+        $sentence->bindValue(':dateEnd', date('Y-m-d', $dateEnd), PDO::PARAM_STR);
+        $sentence->bindValue(':timeInit', date('H:i:s', $dateInit), PDO::PARAM_STR);
+        $sentence->bindValue(':timeEnd', date('H:i:s', $dateEnd), PDO::PARAM_STR);
         return $this->sentencesSQL->getResult($sentence);
     }
 }

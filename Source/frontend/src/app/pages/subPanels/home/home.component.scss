@@ -1,0 +1,23 @@
+.home-background {
+    cursor: default;
+
+    h2 {
+        font-size: 2rem;
+        margin: 0 !important;
+        text-align: center;
+    }
+
+    .description {
+        margin-top: 15px;
+        text-align: center;
+
+        p {
+            font-size: 1.2rem;
+        }
+        
+        a {
+            font-size: 1.2rem;
+            color: white;
+        }
+    }
+}

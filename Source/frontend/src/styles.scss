@@ -40,11 +40,14 @@ html, body {
 
 .text-center {
   text-align: center !important;
-  font-size: 60px !important;
 }
 
 .background-color-tranparent {
   background-color: rgba(50, 50, 50, .6) !important;
+}
+
+.background-color-tranparent-low {
+  background-color: rgba(50, 50, 50, .2) !important;
 }
 
 .background-color-main {
@@ -96,10 +99,26 @@ html, body {
   align-items: center !important;
 }
 
+.z-index-10 {
+  z-index: 10;
+}
+
+.z-index-50 {
+  z-index: 50;
+}
+
 .z-index-90 {
   z-index: 90;
 }
 
 .z-index-100 {
   z-index: 100;
+}
+
+.spliter-16 {
+  padding-top: 16px;
+}
+
+.margin-15px {
+  margin: 15px;
 }

@@ -33,7 +33,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `uni_dw_eventos`.`eventos` (
   `idevento` INT AUTO_INCREMENT,
   `nombre` VARCHAR(255) NOT NULL,
-  `descripcion` MEDIUMTEXT NOT NULL,
+  `descripcion` MEDIUMTEXT,
   `encargado` INT NOT NULL,
   `fecha_inicio` DATE NOT NULL,
   `fecha_fin` DATE NOT NULL,
@@ -144,6 +144,24 @@ BEGIN
 	SELECT `idusuario`, `documento`, `nombre`, `alias`, `contrasena`, `activo`
       FROM `uni_dw_eventos`.`usuarios`
       WHERE (`alias` = UPPER(nick_param));
+END $$
+CREATE PROCEDURE `uni_dw_eventos`.`usuarios.getByNick.WhitRole`(
+  IN nick_param VARCHAR(45))
+BEGIN
+	SELECT `usuarios`.`idusuario`, `usuarios`.`documento`, `usuarios`.`nombre`, `usuarios`.`alias`, `usuarios`.`activo`,
+		`roles`.`idrole`, `roles`.`etiqueta`, `roles`.`peso`,
+        `roles_usuarios`.`asigned_by`
+      FROM `uni_dw_eventos`.`usuarios`
+		INNER JOIN `uni_dw_eventos`.`roles_usuarios` ON `usuarios`.`idusuario` = `roles_usuarios`.`idusuario`
+        INNER JOIN `uni_dw_eventos`.`roles` ON `roles_usuarios`.`idrole` = `roles`.`idrole`
+      WHERE (`alias` = UPPER(nick_param));
+END $$
+CREATE PROCEDURE `uni_dw_eventos`.`usuarios.getUsersByNick`(
+  IN nick_param VARCHAR(45))
+BEGIN
+	SELECT `idusuario`, `documento`, `nombre`, `alias`, `activo`
+      FROM `uni_dw_eventos`.`usuarios`
+      WHERE (`alias` LIKE UPPER(nick_param));
 END $$
 CREATE PROCEDURE `uni_dw_eventos`.`usuarios.setAllowed`(
   IN id_param INT,
@@ -316,6 +334,18 @@ END $$
 CREATE PROCEDURE `uni_dw_eventos`.`roles_usuarios.getByUser`(
   IN user_param INT)
 BEGIN
+    SELECT `id_role_usuario`, `idrole`, `idusuario`, `asigned_by`
+      FROM `uni_dw_eventos`.`roles_usuarios`
+      WHERE (`idusuario` = user_param);
+END $$
+CREATE PROCEDURE `uni_dw_eventos`.`roles_usuarios.updateRole`(
+  IN user_param INT,
+  IN role_param INT,
+  IN asigned_param INT)
+BEGIN
+	UPDATE `uni_dw_eventos`.`roles_usuarios`
+	  SET `idrole` = role_param, `asigned_by` = asigned_param
+      WHERE (`id_role_usuario` = user_param);
     SELECT `id_role_usuario`, `idrole`, `idusuario`, `asigned_by`
       FROM `uni_dw_eventos`.`roles_usuarios`
       WHERE (`idusuario` = user_param);

@@ -1,0 +1,69 @@
+.user-manager-background {
+    cursor: default;
+
+    h2 {
+        font-size: 2rem;
+        margin: 0 !important;
+        text-align: center;
+    }
+
+    .users-panel {
+        text-align: center;
+
+        mat-form-field {
+            max-width: 600px;
+        }
+
+        .user-panel-lorem {
+            max-width: 600px;
+            margin-left: 50%;
+            transform: translateX(-50%);
+
+            p {
+                margin: 0;
+                text-align: left;
+            }
+        }
+    }
+
+    .user-edit {
+        padding: 16px 18px;
+
+        p {
+            margin: 0 !important;
+        }
+
+        .user-not-found {
+            margin-top: 16px;
+        }
+
+        .user-found {
+            margin-top: 16px;
+        }
+
+        .text-left {
+            text-align: left;
+        }
+
+        .text-right {
+            border-top: 2px dotted white;
+            text-align: right;
+            border-bottom: 2px dotted white;
+        }
+
+        .options-panels {
+            margin-top: 20px;
+            width: 100%;
+            padding-top: 10px;
+            padding-bottom: 10px;
+
+            form {
+                text-align: center;
+                transform: translateX(-50%);
+                margin-left: 50%;
+                width: 100%;
+                max-width: 500px;
+            }
+        }
+    }
+}

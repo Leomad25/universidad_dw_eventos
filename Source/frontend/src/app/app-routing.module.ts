@@ -5,6 +5,12 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { PanelComponent } from './pages/panel/panel.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { HomeComponent } from './pages/subPanels/home/home.component';
+import { UserManagerComponent } from './pages/subPanels/admin/user-manager/user-manager.component';
+import { CreateByMeComponent } from './pages/subPanels/eventManager/create-by-me/create-by-me.component';
+import { CreateComponent } from './pages/subPanels/eventManager/create/create.component';
+import { MyInterestedComponent } from './pages/subPanels/personal/my-interested/my-interested.component';
+import { ExploreComponent } from './pages/subPanels/diary/explore/explore.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/auth/login', pathMatch: 'full'},
@@ -24,5 +30,11 @@ export const RoutingComponent = [
   LoginComponent,
   RegisterComponent,
   PanelComponent,
-  PageNotFoundComponent
+  PageNotFoundComponent,
+  HomeComponent,
+  UserManagerComponent,
+  CreateByMeComponent,
+  CreateComponent,
+  MyInterestedComponent,
+  ExploreComponent
 ];

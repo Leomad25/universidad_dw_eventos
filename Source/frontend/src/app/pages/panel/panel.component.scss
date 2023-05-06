@@ -44,6 +44,7 @@
         max-width: 300px;
         max-height: 100%;
         overflow: hidden;
+        overflow-y: auto;
         transform: translateX(calc(-100% - 8px));
 
         .nav-menu-body {
@@ -59,6 +60,15 @@
                 padding-top: 10px;
             }
         }
+    }
+
+    .nav-menu::-webkit-scrollbar {
+        width: 8px;
+        background-color: rgba(200, 200, 200, .6);
+    }
+
+    .nav-menu::-webkit-scrollbar-thumb {
+        background-color: rgba(80, 80, 80, .8);
     }
 
     .nav-profile {
@@ -97,8 +107,31 @@
         }
     }
 
+    .nav-profile::-webkit-scrollbar {
+        width: 8px;
+        background-color: rgba(200, 200, 200, .6);
+    }
+
+    .nav-profile::-webkit-scrollbar-thumb {
+        background-color: rgba(80, 80, 80, .8);
+    }
+
     .container {
         top: 0;
         left: 0;
+
+        .container-panels {
+            overflow: hidden;
+            overflow-y: auto;
+        }
+
+        .container-panels::-webkit-scrollbar {
+            width: 8px;
+            background-color: rgba(200, 200, 200, .6);
+        }
+
+        .container-panels::-webkit-scrollbar-thumb {
+            background-color: rgba(80, 80, 80, .8);
+        }
     }
 }
