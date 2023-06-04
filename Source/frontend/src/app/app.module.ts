@@ -6,12 +6,14 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModuls } from './auxiliary/material.module';
 import { AngularModuls, Components } from "./auxiliary/angular.module";
+import { ScreenCameraComponent } from './component/screen-camera/screen-camera.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RoutingComponent,
-    Components
+    Components,
+    ScreenCameraComponent
   ],
   imports: [
     BrowserModule,

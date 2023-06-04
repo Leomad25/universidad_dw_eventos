@@ -76,7 +76,7 @@ export class PanelComponent implements OnInit {
         this.loadingScreenActive = true;
         if (this.tokenService.get() != null) {
             try {
-                await lastValueFrom(this.tokenService.isValid(this.tokenService.get()));
+                await lastValueFrom(this.tokenService.isValid());
                 console.log('[panel] Login success');
                 this.loadUserDataAsync();
             } catch (err: any) {
@@ -93,7 +93,7 @@ export class PanelComponent implements OnInit {
 
     async loadUserDataAsync() {
         this.loadingScreenActive = true;
-        let userDataTemp = await this.userMethodsAux.loadDataInfoAsync(this.tokenService.get());
+        let userDataTemp = await this.userMethodsAux.loadDataInfoAsync();
         if (userDataTemp instanceof String) {
             console.log('[panel] User load error');
             this.errMessage.isVisible = true;

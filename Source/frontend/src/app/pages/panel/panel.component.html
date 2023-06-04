@@ -140,20 +140,23 @@
                 [iduser]="userData?.iduser"
                 (onError)="showError($event)"
                 (onSuccess)="showSuccess($event)"
-                (onLoading)="showLoadingScreen($event)">
+                (onLoading)="showLoadingScreen($event)"
+                (onRedirectHome)="clickOnHome()">
             </app-user-manager>
             <app-create-by-me *ngIf="panelsMainControl.eventManager.createByMe"
                 [idEventSelected]="idEventCreatedSelected"
                 (onError)="showError($event)"
                 (onSuccess)="showSuccess($event)"
-                (onLoading)="showLoadingScreen($event)">
+                (onLoading)="showLoadingScreen($event)"
+                (onRedirectHome)="clickOnHome()">
             </app-create-by-me>
             <app-create *ngIf="panelsMainControl.eventManager.create"
                 [iduser]="userData?.iduser"
                 (onError)="showError($event)"
                 (onSuccess)="showSuccess($event)"
                 (onLoading)="showLoadingScreen($event)"
-                (onRedirect)="clickOnEventManagerCreateByMe($event)">
+                (onRedirect)="clickOnEventManagerCreateByMe($event)"
+                (onRedirectHome)="clickOnHome()">
             </app-create>
             <app-my-interested *ngIf="panelsMainControl.personal.myInterested"></app-my-interested>
             <app-explore *ngIf="panelsMainControl.diary.explore"></app-explore>

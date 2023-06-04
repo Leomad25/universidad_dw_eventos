@@ -1,3 +1,19 @@
-<div class="padding-15px">
-    <p>my-interested works!</p>
+<div class="body margin-15px">
+    <h2>Personal Panel</h2>
+    <app-event-list
+        [title] = "'Subscribed events'">
+        <div #listItems class="card-list-item" *ngFor="let item of listMyEvents">
+            <app-event-card
+                [id]="item.idevent"
+                [title]="item.name"
+                [description]="item.description"
+                [dateInit]="item.dateInit"
+                [dateEnd]="item.dateEnd"
+                [timeInit]="item.timeInit"
+                [timeEnd]="item.timeEnd"
+                [direction]="'No address detected'"
+                [isUrl]="false">
+            </app-event-card>
+        </div>
+    </app-event-list>
 </div>

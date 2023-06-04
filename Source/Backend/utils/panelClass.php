@@ -151,6 +151,50 @@ class EventService {
             return $result;
         }
     }
+
+    public function getEventByManager(int $manager): array | string
+    {
+        $database = new DatabaseConn();
+        if ($database->getConnection() != null)
+        {
+            $eventsSentences = new EventsSentencesSQL(new SentencesSQL($database));
+            $result = $eventsSentences->getEventByManager($manager);
+            return $result;
+        }
+    }
+
+    public function getEventById(int $idEvent): array | string
+    {
+        $database = new DatabaseConn();
+        if ($database->getConnection() != null)
+        {
+            $eventsSentences = new EventsSentencesSQL(new SentencesSQL($database));
+            $result = $eventsSentences->getEventById($idEvent);
+            return $result;
+        }
+    }
+
+    public function updateEvent(int $idevent, string $description, bool $isUrl, string $direction): array | string
+    {
+        $database = new DatabaseConn();
+        if ($database->getConnection() != null)
+        {
+            $eventsSentences = new EventsSentencesSQL(new SentencesSQL($database));
+            $result = $eventsSentences->updateEvent($idevent, $description, $isUrl, $direction);
+            return $result;
+        }
+    }
+
+    public function updateStatusEvent(int $idevent, int $status): array | string
+    {
+        $database = new DatabaseConn();
+        if ($database->getConnection() != null)
+        {
+            $eventsSentences = new EventsSentencesSQL(new SentencesSQL($database));
+            $result = $eventsSentences->updateStatusEvent($idevent, $status);
+            return $result;
+        }
+    }
 }
 
 ?>

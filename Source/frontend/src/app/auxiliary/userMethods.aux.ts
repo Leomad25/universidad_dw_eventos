@@ -14,9 +14,9 @@ export class UserMethodsAux {
         private userService:UserService
     ) {}
 
-    async loadDataInfoAsync(jwt: string | null): Promise<string | UserInterface> {
+    async loadDataInfoAsync(): Promise<string | UserInterface> {
         var userData: UserInterface | string = "The token insert is invalid";
-        let data = await lastValueFrom(this.userService.getUserData(this.tokenService.get()).pipe());
+        let data = await lastValueFrom(this.userService.getUserData().pipe());
         if (data) { data = data.data;
             userData = {
                 iduser: data.idusuario,

@@ -1,0 +1,94 @@
+<div class="body background-color-tranparent width-full delete-text-margin">
+    <div class="position-relative width-full height-full">
+        <div class="card background-color-main font-color-black absolute-center">
+            <div class="title items-center">
+                <div class="id-content">
+                    <h2>{{eventEdit.idevent}}</h2>
+                </div>
+                <h2 class="width-full">{{eventEdit.name}}</h2>
+                <div class="close-panel">
+                    <button
+                        mat-raised-button
+                        color="primary"
+                        (click)="onClose()">
+                        Close
+                    </button>
+                </div>
+            </div>
+            <div class="description">
+                <p>{{eventEdit.description}}</p>
+            </div>
+            <div class="date items-center">
+                <div class="init">
+                    <h3>Date init</h3>
+                    <p>{{eventEdit.dateInit}}</p>
+                    <p>{{eventEdit.timeInit}}</p>
+                </div>
+                <div class="end">
+                    <h3>Date end</h3>
+                    <p>{{eventEdit.dateEnd}}</p>
+                    <p>{{eventEdit.timeEnd}}</p>
+                </div>
+            </div>
+            <div class="direction items-center">
+                <div class="url" *ngIf="eventEdit.isUrl">
+                    <p>Is URL</p>
+                </div>
+                <div class="direction-text">
+                    <a href="{{eventEdit.direction}}" *ngIf="eventEdit.isUrl">Cick here for go to url</a>
+                    <p *ngIf="!eventEdit.isUrl">{{eventEdit.direction}}</p>
+                </div>
+            </div>
+            <div class="option-panel">
+                <form [formGroup]="form" (submit)="onSubmit()">
+                    <div class="title">
+                        <h3>Edit Panel</h3>
+                    </div>
+                    <div class="url-container items-center">
+                        <mat-slide-toggle class="width-full"
+                            color="primary"
+                            formControlName="isUrl">
+                            <span class="font-color-black">Direction is URL?</span>
+                        </mat-slide-toggle>
+                        <button *ngIf="btnLoadEnable"
+                            mat-flat-button
+                            type="button"
+                            (click)="onClickLoadVisualizer()">
+                            Load visualizer url
+                        </button>
+                        <button *ngIf="!btnLoadEnable"
+                            mat-flat-button
+                            type="button"
+                            (click)="onClickUnloadVisualizer()">
+                            Unload visualizer url
+                        </button>
+                    </div>
+                    <mat-form-field class="width-full">
+                        <mat-label>Direction</mat-label>
+                        <input
+                            matInput
+                            formControlName="direction">
+                    </mat-form-field>
+                    <mat-form-field class="width-full">
+                        <mat-label>Edit description</mat-label>
+                        <textarea
+                            matInput
+                            formControlName="description"></textarea>
+                    </mat-form-field>
+                    <div class="buttons text-center">
+                        <button
+                            mat-raised-button
+                            color="primary"
+                            type="submit"
+                            [disabled]="form.invalid">
+                            Save
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <app-loading
+            [isVisible]="loadingScreen">
+        </app-loading>
+    </div>
+</div>

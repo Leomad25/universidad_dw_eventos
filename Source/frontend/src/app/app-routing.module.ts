@@ -11,12 +11,14 @@ import { CreateByMeComponent } from './pages/subPanels/eventManager/create-by-me
 import { CreateComponent } from './pages/subPanels/eventManager/create/create.component';
 import { MyInterestedComponent } from './pages/subPanels/personal/my-interested/my-interested.component';
 import { ExploreComponent } from './pages/subPanels/diary/explore/explore.component';
+import { VisualizerComponent } from './pages/visualizer/visualizer.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/auth/login', pathMatch: 'full'},
   {path: 'auth/login', component: LoginComponent},
   {path: 'auth/register', component: RegisterComponent},
   {path: 'panel', component: PanelComponent},
+  {path: 'visualizer', component: VisualizerComponent},
   {path: '**', component: PageNotFoundComponent}
 ];
 
@@ -36,5 +38,6 @@ export const RoutingComponent = [
   CreateByMeComponent,
   CreateComponent,
   MyInterestedComponent,
-  ExploreComponent
+  ExploreComponent,
+  VisualizerComponent
 ];

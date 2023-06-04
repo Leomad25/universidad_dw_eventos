@@ -8,7 +8,7 @@ export class TokenMethodsAux {
 
     async tokenIsValid(jwt: string | null): Promise<true | string> {
         if (jwt != null) {
-            let data =  lastValueFrom(this.tokenService.isValid(this.tokenService.get()))
+            let data =  lastValueFrom(this.tokenService.isValid())
                 .catch((err) => {
                     console.log('error:')
                     console.log(err);
@@ -20,8 +20,8 @@ export class TokenMethodsAux {
         return "Err: Token Not Found";
     }
 
-    async tokenUserInfo(jwt: string | null): Promise<TokenUserInfoInterface | string> {
-        const isValid = await this.tokenIsValid(jwt);
+    async tokenUserInfo(): Promise<TokenUserInfoInterface | string> {
+        const isValid = await this.tokenIsValid(this.tokenService.get());
         if (isValid != true) return isValid;
         let userData:TokenUserInfoInterface;
         userData = {

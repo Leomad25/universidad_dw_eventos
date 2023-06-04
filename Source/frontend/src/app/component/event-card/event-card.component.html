@@ -1,0 +1,32 @@
+<div class="body background-color-main font-color-black box-shadow">
+    <div class="title items-center {{isClickable?'cursor-pointer':''}}" (click)="onClick()">
+        <div class="id-content">
+            <h2>{{id}}</h2>
+        </div>
+        <h2>{{title}}</h2>
+    </div>
+    <div class="description">
+        <p>{{description}}</p>
+    </div>
+    <div class="date items-center">
+        <div class="init">
+            <h3>Date init</h3>
+            <p>{{dateInit}}</p>
+            <p>{{timeInit}}</p>
+        </div>
+        <div class="end">
+            <h3>Date end</h3>
+            <p>{{dateEnd}}</p>
+            <p>{{timeEnd}}</p>
+        </div>
+    </div>
+    <div class="direction items-center">
+        <div class="url" *ngIf="isUrl">
+            <p>Is URL</p>
+        </div>
+        <div class="direction-text">
+            <a href="{{direction}}" *ngIf="isUrl">Cick here for go to url</a>
+            <p *ngIf="!isUrl">{{direction}}</p>
+        </div>
+    </div>
+</div>

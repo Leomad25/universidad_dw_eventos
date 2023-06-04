@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { Configuration } from '../service.settings';
@@ -7,7 +7,6 @@ import { Configuration } from '../service.settings';
 @Injectable({
   providedIn: 'root'
 })
-
 export class TokenService {
 
     url:string = Configuration.url + 'auth/token.php';
@@ -31,9 +30,9 @@ export class TokenService {
         localStorage.removeItem('token');
     }
 
-    isValid(jwt: string|null): Observable<any>
+    isValid(): Observable<any>
     {
-        const headers = new HttpHeaders({'Authorization': 'Bearer ' + jwt})
+        const headers = new HttpHeaders({'Authorization': 'Bearer ' + this.get()})
         return this.http.get(this.url, { headers: headers });
     }
-  }
+}

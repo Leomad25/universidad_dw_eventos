@@ -183,6 +183,42 @@ class EventsSentencesSQL
         $sentence->bindValue(':timeEnd', date('H:i:s', $dateEnd), PDO::PARAM_STR);
         return $this->sentencesSQL->getResult($sentence);
     }
+
+    public function getEventByManager(int $manager): array | string
+    {
+        $sql = 'CALL `uni_dw_eventos`.`eventos.getByManager`(:manager)';
+        $sentence = $this->sentencesSQL->createSentence($sql);
+        $sentence->bindValue(':manager', $manager, PDO::PARAM_INT);
+        return $this->sentencesSQL->getResult($sentence);
+    }
+
+    public function getEventById(int $idEvent): array | string
+    {
+        $sql = 'CALL `uni_dw_eventos`.`eventos.getById`(:idEvent)';
+        $sentence = $this->sentencesSQL->createSentence($sql);
+        $sentence->bindValue(':idEvent', $idEvent, PDO::PARAM_INT);
+        return $this->sentencesSQL->getResult($sentence);
+    }
+
+    public function updateEvent(int $idevent, string $description, bool $isUrl, string $direction): array | string
+    {
+        $sql = 'CALL `uni_dw_eventos`.`eventos.update`(:idevent, :description, :direction, :isUrl)';
+        $sentence = $this->sentencesSQL->createSentence($sql);
+        $sentence->bindValue(':idevent', $idevent, PDO::PARAM_INT);
+        $sentence->bindValue(':description', $description, PDO::PARAM_STR);
+        $sentence->bindValue(':direction', $direction, PDO::PARAM_STR);
+        $sentence->bindValue(':isUrl', $isUrl, PDO::PARAM_BOOL);
+        return $this->sentencesSQL->getResult($sentence);
+    }
+
+    public function updateStatusEvent(int $idevent, int $status): array | string
+    {
+        $sql = 'CALL `uni_dw_eventos`.`eventos.setStatus`(:idevent, :status)';
+        $sentence = $this->sentencesSQL->createSentence($sql);
+        $sentence->bindValue(':idevent', $idevent, PDO::PARAM_INT);
+        $sentence->bindValue(':status', $status, PDO::PARAM_INT);
+        return $this->sentencesSQL->getResult($sentence);
+    }
 }
 
 ?>

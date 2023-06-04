@@ -3,22 +3,25 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Configuration } from '../service.settings';
 import { Observable } from 'rxjs';
+import { EventInterface } from 'src/app/models/event.model';
+import { TokenService } from '../auth/token.service';
 
 @Injectable({
     providedIn: 'root'
   })
-export class RoleService {
+export class EventService {
 
     url:string = Configuration.url + 'panel/events.php';
 
     constructor(
-        private http: HttpClient
+        private http: HttpClient,
+        private tokenService: TokenService
     ) {}
 
     createEvent(
-        jwt: string | null, name: string, description: string, manager: number, dateInit: string, dateEnd: string
+        name: string, description: string, manager: number, dateInit: string, dateEnd: string
         ): Observable<any> {
-        const headers = new HttpHeaders({'Authorization': 'Bearer ' + jwt});
+        const headers = new HttpHeaders({'Authorization': 'Bearer ' + this.tokenService.get()});
         const body: CreateEventBodyInterface = {
             name,
             description,
@@ -27,6 +30,36 @@ export class RoleService {
             dateEnd
         }
         return this.http.post(this.url, body, { headers: headers });
+    }
+
+    getEventByManager(): Observable<any> {
+        const headers = new HttpHeaders({'Authorization': 'Bearer ' + this.tokenService.get()});
+        return this.http.get(this.url, { headers: headers });
+    }
+
+    getEventById(id: number) {
+        const headers = new HttpHeaders({'Authorization': 'Bearer ' + this.tokenService.get()});
+        return this.http.get(this.url + '?idevent=' + id, { headers: headers });
+    }
+
+    updateEventById(event: EventInterface) {
+        const headers = new HttpHeaders({'Authorization': 'Bearer ' + this.tokenService.get()});
+        const body = {
+            idevent: event.idevent,
+            description: event.description,
+            isUrl: event.isUrl,
+            direction: event.direction
+        }
+        return this.http.put(this.url, body, { headers: headers });
+    }
+
+    updateStatusEventById(event: EventInterface) {
+        const headers = new HttpHeaders({'Authorization': 'Bearer ' + this.tokenService.get()});
+        const body = {
+            idevent: event.idevent,
+            status: event.status
+        }
+        return this.http.put(this.url, body, { headers: headers });
     }
 }
 

@@ -40,6 +40,7 @@ CREATE TABLE IF NOT EXISTS `uni_dw_eventos`.`eventos` (
   `tiempo_inicio` TIME NOT NULL,
   `tiempo_fin` TIME NOT NULL,
   `lugar` TEXT NULL,
+  `es_url` BOOLEAN DEFAULT 0,
   `estado` INT(1) DEFAULT 1,
   PRIMARY KEY (`idevento`),
   UNIQUE INDEX `nombre_UNIQUE` (`nombre` ASC) VISIBLE,
@@ -205,22 +206,29 @@ END $$
 CREATE PROCEDURE `uni_dw_eventos`.`eventos.getById`(
   IN id_param INT)
 BEGIN
-	SELECT `idevento`, `nombre`, `descripcion`, `encargado`, `fecha_inicio`, `fecha_fin`, `tiempo_inicio`, `tiempo_fin`, `estado`
+	SELECT `idevento`, `nombre`, `descripcion`, `encargado`, `fecha_inicio`, `fecha_fin`, `tiempo_inicio`, `tiempo_fin`, `estado`, `lugar`, `es_url`
       FROM `uni_dw_eventos`.`eventos`
-      WHERE (`id_param` = id_param);
+      WHERE (`idevento` = id_param);
 END $$
 CREATE PROCEDURE `uni_dw_eventos`.`eventos.getByName`(
   IN name_param VARCHAR(255))
 BEGIN
-	SELECT `idevento`, `nombre`, `descripcion`, `encargado`, `fecha_inicio`, `fecha_fin`, `tiempo_inicio`, `tiempo_fin`, `estado`
+	SELECT `idevento`, `nombre`, `descripcion`, `encargado`, `fecha_inicio`, `fecha_fin`, `tiempo_inicio`, `tiempo_fin`, `estado`, `lugar`, `es_url`
       FROM `uni_dw_eventos`.`eventos`
       WHERE (`nombre` = UPPER(name_param));
+END $$
+CREATE PROCEDURE `uni_dw_eventos`.`eventos.getByManager`(
+  IN manager_param INT)
+BEGIN
+	SELECT `idevento`, `nombre`, `descripcion`, `encargado`, `fecha_inicio`, `fecha_fin`, `tiempo_inicio`, `tiempo_fin`, `estado`, `lugar`, `es_url`
+      FROM `uni_dw_eventos`.`eventos`
+      WHERE (`encargado` = manager_param);
 END $$
 CREATE PROCEDURE `uni_dw_eventos`.`eventos.getByDate`(
   IN date_init_param DATE,
   IN date_end_param DATE)
 BEGIN
-	SELECT `idevento`, `nombre`, `descripcion`, `encargado`, `fecha_inicio`, `fecha_fin`, `tiempo_inicio`, `tiempo_fin`, `estado`
+	SELECT `idevento`, `nombre`, `descripcion`, `encargado`, `fecha_inicio`, `fecha_fin`, `tiempo_inicio`, `tiempo_fin`, `estado`, `lugar`, `es_url`
       FROM `uni_dw_eventos`.`eventos`
       WHERE (`fecha` BETWEEN date_init_param AND date_end_param);
 END $$
@@ -230,6 +238,24 @@ CREATE PROCEDURE `uni_dw_eventos`.`eventos.setStatus`(
 BEGIN
 	UPDATE `uni_dw_eventos`.`eventos`
       SET `estado` = status_param
+      WHERE (`idevento` = id_param);
+	SELECT `idevento`, `nombre`, `descripcion`, `encargado`, `fecha_inicio`, `fecha_fin`, `tiempo_inicio`, `tiempo_fin`, `estado`, `lugar`, `es_url`
+      FROM `uni_dw_eventos`.`eventos`
+      WHERE (`idevento` = id_param);
+END $$
+CREATE PROCEDURE `uni_dw_eventos`.`eventos.update`(
+  IN id_param INT,
+  IN description_param MEDIUMTEXT,
+  IN place_param TEXT,
+  IN url_param BOOLEAN)
+BEGIN
+	UPDATE `uni_dw_eventos`.`eventos`
+      SET `descripcion` = description_param,
+	      `lugar` = place_param,
+          `es_url` = url_param
+      WHERE (`idevento` = id_param);
+	SELECT `idevento`, `nombre`, `descripcion`, `encargado`, `fecha_inicio`, `fecha_fin`, `tiempo_inicio`, `tiempo_fin`, `estado`, `lugar`, `es_url`
+      FROM `uni_dw_eventos`.`eventos`
       WHERE (`idevento` = id_param);
 END $$
 DELIMITER ;

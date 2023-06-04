@@ -4,7 +4,8 @@ import { debounceTime, lastValueFrom } from 'rxjs';
 
 import { TokenService } from '../../../../services/api/auth/token.service';
 import { UserService } from '../../../../services/api/panel/user.service';
-import { RoleService } from '../../../../services/api/panel/role.service'
+import { RoleService } from '../../../../services/api/panel/role.service';
+import { ValidateRoleService } from '../../../../services/api/panel/_validateRole.service'
 
 import { UserInterface } from '../../../../models/user.model'
 
@@ -35,19 +36,33 @@ export class UserManagerComponent implements OnInit {
     @Output('onError') emitOnError:EventEmitter<string[]> = new EventEmitter<string[]>();
     @Output('onSuccess') emitOnSuccess:EventEmitter<string[]> = new EventEmitter<string[]>();
     @Output('onLoading') emitOnLoading:EventEmitter<boolean> = new EventEmitter<boolean>();
-
+    @Output('onRedirectHome') emitOnRedirectHome:EventEmitter<void> = new EventEmitter<void>();
 
     constructor(
         private userService: UserService,
         private tokenService: TokenService,
-        private roleService: RoleService
+        private roleService: RoleService,
+        private validateRoleService: ValidateRoleService
     ) {}
 
     async ngOnInit(): Promise<void> {
         Promise.resolve().then(() => { this.emitOnLoading.emit(true); });
+        await this.validateRoleRequired();
         await this.usernameValueChange();
-        //await this.loadRolesList();
         Promise.resolve().then(() => { this.emitOnLoading.emit(false); });
+    }
+
+    private async validateRoleRequired() {
+        let data = await lastValueFrom(this.validateRoleService.getRole())
+            .catch((err) => {
+                const message = err.error?.responsive?.message;
+                this.emitOnError.emit([message]);
+                this.emitOnRedirectHome.emit();
+            });
+        if (data)
+            if (data.data.admin) return;
+        this.emitOnError.emit(['Err: Role Administrator required']);
+        this.emitOnRedirectHome.emit();
     }
 
     private usernameValueChange() {
@@ -56,7 +71,7 @@ export class UserManagerComponent implements OnInit {
             .subscribe(async (value) => {
                 this.usersList = [];
                 if (value != null && value.length > 0) {
-                    const data = await lastValueFrom(this.userService.getUsersFilterByNick(this.tokenService.get(), value))
+                    const data = await lastValueFrom(this.userService.getUsersFilterByNick(value))
                         .catch((err) => {
                             const errData = err.error?.responsive?.message;
                             this.emitOnError.emit([errData]);
@@ -74,7 +89,7 @@ export class UserManagerComponent implements OnInit {
     }
 
     private async loadRolesList() {
-        let data = await lastValueFrom(this.roleService.getAllRoles(this.tokenService.get()))
+        let data = await lastValueFrom(this.roleService.getAllRoles())
             .catch((err) => {
                 const errData = err.error?.responsive?.message;
                 this.emitOnError.emit([errData]);
@@ -98,7 +113,7 @@ export class UserManagerComponent implements OnInit {
             const input = this.form.controls['nickname'].value;
             if (input && this.usersList.includes(input)) {
                 Promise.resolve().then(() => { this.emitOnLoading.emit(true); });
-                let data = await lastValueFrom(this.userService.getUserByNick(this.tokenService.get(), input))
+                let data = await lastValueFrom(this.userService.getUserByNick(input))
                     .catch((err) => {this.userInfo = undefined});
                 if (data) {
                     this.userIsValid = true;
@@ -149,7 +164,7 @@ export class UserManagerComponent implements OnInit {
             const newStatus:boolean =
                 this.formUpdateUser.controls['isUserActive'].value != null ?
                 this.formUpdateUser.controls['isUserActive'].value:this.userInfo.active;
-            let data = await lastValueFrom(this.userService.changeStatus(this.tokenService.get(), this.userInfo.iduser, newStatus))
+            let data = await lastValueFrom(this.userService.changeStatus(this.userInfo.iduser, newStatus))
                 .catch ((err) => {
                     const errData = err.error?.responsive?.message;
                     messageUserActive = '[User active]: ' + errData;
@@ -164,7 +179,7 @@ export class UserManagerComponent implements OnInit {
             const newRole:number =
                 this.formUpdateUser.controls['selectedRole'].value != null ?
                 this.formUpdateUser.controls['selectedRole'].value:this.userInfo!.role.idrole;
-            let data = await lastValueFrom(this.roleService.changeRole(this.tokenService.get(), this.userInfo!.iduser, newRole))
+            let data = await lastValueFrom(this.roleService.changeRole(this.userInfo!.iduser, newRole))
                 .catch ((err) => {
                     const errData = err.error?.responsive?.message;
                     messageRole = '[User role]: ' + errData;

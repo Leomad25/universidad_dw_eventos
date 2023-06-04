@@ -1,10 +1,11 @@
 import { formatDate } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { lastValueFrom } from 'rxjs';
 
-import { RoleService } from '../../../../services/api/panel/event.service';
+import { EventService } from '../../../../services/api/panel/event.service';
 import { TokenService } from '../../../../services/api/auth/token.service'
+import { ValidateRoleService } from 'src/app/services/api/panel/_validateRole.service';
 
 @Component({
     selector: 'app-create',
@@ -17,6 +18,8 @@ export class CreateComponent implements OnInit {
     @Output('onSuccess') emitOnSuccess:EventEmitter<string[]> = new EventEmitter<string[]>();
     @Output('onLoading') emitOnLoading:EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output('onRedirect') emitOnRedirect:EventEmitter<number> = new EventEmitter<number>();
+    @Output('onRedirectHome') emitOnRedirectHome:EventEmitter<void> = new EventEmitter<void>();
+    
     form:FormGroup = new FormGroup({
         name: new FormControl('', [Validators.required]),
         description: new FormControl(''),
@@ -31,12 +34,28 @@ export class CreateComponent implements OnInit {
     });
 
     constructor(
-        private roleService: RoleService,
-        private tokenService: TokenService
+        private eventService: EventService,
+        private tokenService: TokenService,
+        private validateRoleService: ValidateRoleService
     ) {}
 
-    ngOnInit(): void {
-        
+    async ngOnInit(): Promise<void> {
+        Promise.resolve().then(() => {this.emitOnLoading.emit(true);});
+        await this.validateRoleRequired();
+        Promise.resolve().then(() => {this.emitOnLoading.emit(false);});
+    }
+
+    private async validateRoleRequired() {
+        let data = await lastValueFrom(this.validateRoleService.getRole())
+            .catch((err) => {
+                const message = err.error?.responsive?.message;
+                this.emitOnError.emit([message]);
+                this.emitOnRedirectHome.emit();
+            });
+        if (data)
+            if (data.data.eventManager) return;
+        this.emitOnError.emit(['Err: Role event manager required']);
+        this.emitOnRedirectHome.emit();
     }
 
     async onSubmit() {
@@ -64,8 +83,7 @@ export class CreateComponent implements OnInit {
                     this.form.controls['endMinutes'].value :
                     '0' + this.form.controls['endMinutes'].value) + ':00';
 
-            const data = await lastValueFrom(this.roleService.createEvent(
-                this.tokenService.get(),
+            const data = await lastValueFrom(this.eventService.createEvent(
                 this.form.controls['name'].value,
                 this.form.controls['description'].value,
                 this.iduser,

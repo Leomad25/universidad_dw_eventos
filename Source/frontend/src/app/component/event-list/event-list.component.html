@@ -1,0 +1,23 @@
+<div class="list-nav events- background-color-tranparent">
+    <div class="card-title">
+        <h3>{{title}}</h3>
+    </div>
+    <div class="not-items" *ngIf="isListEmpty">
+        <p>No events to show</p>
+    </div>
+    <div class="card-body" *ngIf="!isListEmpty">
+        <div class="card-nav card-nav-left" (click)="swapperPanel(pos - 1)">
+            <img class="width-full"
+                src="assets/arrow-left.svg">
+        </div>
+        <div class="card-list">
+            <div #asList class="card-items background-color-tranparent">
+                <ng-content></ng-content>
+            </div>
+        </div>
+        <div class="card-nav card-nav-rigth" (click)="swapperPanel(pos + 1)">
+            <img class="width-full"
+                src="assets/arrow-right.svg">
+        </div>
+    </div>
+</div>

@@ -58,6 +58,10 @@ html, body {
   color: white !important;
 }
 
+.font-color-black {
+  color: black !important;
+}
+
 .box-shadow {
   box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.2) !important;
 }
@@ -68,6 +72,10 @@ html, body {
 
 .position-absolute {
   position: absolute;
+}
+
+.position-fixed {
+  position: fixed !important;
 }
 
 .display-flex {
@@ -103,6 +111,10 @@ html, body {
   z-index: 10;
 }
 
+.z-index-40 {
+  z-index: 40;
+}
+
 .z-index-50 {
   z-index: 50;
 }
@@ -121,4 +133,11 @@ html, body {
 
 .margin-15px {
   margin: 15px;
+}
+
+.card-list-item {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
 }

@@ -1,0 +1,98 @@
+<div class="header width-full position-relative background-color-tranparent box-shadow">
+    <div class="width-full height-full font-color-white display-inline-flex">
+        <div class="nav-button display-flex height-full"
+            (click)="onClickBackToHome()">
+            <img class="width-full"
+                src="assets/home.svg">
+        </div>
+        <div class="title display-flex width-full height-full">
+            <div class="width-full align-items-center">
+                <h1 class="width-full text-center">Visualizer</h1>
+            </div>
+        </div>
+        <div class="nav-profile display-flex height-full"
+            (click)="alterPanelProfile()">
+            <img class="width-full"
+                src="assets/user.svg">
+        </div>
+    </div>
+</div>
+<div class="body width-full position-relative">
+    <div class="visualizer-body width-full height-full position-relative">
+        <div class="screen width-full height-full">
+            <app-screen-camera>
+            </app-screen-camera>
+        </div>
+        <div class="control-panel"
+            *ngIf="screeControlPanel.isVisible"
+            [@screeControlPanelAnimation]="screeControlPanel.isOpen?'open':'close'">
+            <div class="title display-flex">
+                <div class="btn{{screeControlPanel.isOpen?'':' btn-close'}} align-items-center"
+                    (click)="deployScreenControl()">
+                    <img *ngIf="!screeControlPanel.isOpen" src="assets/arrow-right.svg">
+                    <img *ngIf="screeControlPanel.isOpen" src="assets/arrow-left.svg">
+                </div>
+            </div>
+        </div>
+        <div class="chat-panel"
+            [@chatPanelAnimation]="chatPanel.isOpen?'open':'close'">
+            <div class="title display-flex">
+                <div class="btn{{chatPanel.isOpen?'':' btn-close'}} align-items-center"
+                    (click)="deployChatScreen()">
+                    <img *ngIf="!chatPanel.isOpen" src="assets/arrow-left.svg">
+                    <img *ngIf="chatPanel.isOpen" src="assets/arrow-right.svg">
+                </div>
+                <div class="text width-full align-items-center">
+                    <h2>Chat panel</h2>
+                </div>
+            </div>
+            <div class="chat-body">
+
+            </div>
+            <div class="chat-footer">
+                <form class="align-items-center"
+                    (submit)="sendFormChat()">
+                    <textarea matInput></textarea>
+                    <button
+                        mat-raised-button
+                        color="primary"
+                        type="submit"
+                        class="align-items-center">
+                        <img src="assets/compass.svg">
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="nav-profile position-absolute background-color-main box-shadow z-index-50"
+        [@profilePanelAnimation]="profilePanelStatus?'open':'close'">
+        <div class="nav-profile-body position-relative">
+            <h2>Welcome</h2>
+            <p>{{userData?.fullname}}</p>
+            <p class="role-text">{{userData?.role?.tag}}</p>
+            <div class="nav-profile-buttons">
+                <button class="width-full"
+                    mat-raised-button
+                    color="primary"
+                    (click)="clickOnLogOut()">
+                    Log out
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<app-message-alert
+    [isSuccessMessage]="true"
+    [isVisible]="successMessage.isVisible"
+    [message]="successMessage.message"
+    (onClose)="onCloseSuccessScreen()">
+</app-message-alert>
+<app-message-alert
+    [isErrorMessage]="true"
+    [isVisible]="errMessage.isVisible"
+    [message]="errMessage.message"
+    (onClose)="onCloseErrScreen()">
+</app-message-alert>
+<app-loading
+    [isVisible]="loadingScreenActive">
+</app-loading>

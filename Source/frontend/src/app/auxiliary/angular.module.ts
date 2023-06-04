@@ -7,11 +7,14 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 import { MessageAlertComponent } from "../component/message-alert/message-alert.component";
 import { LoadingComponent } from '../component/loading/loading.component';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { EventCardComponent } from '../component/event-card/event-card.component';
+import { EventCardEditComponent } from '../component/event-card-edit/event-card-edit.component';
+import { EventListComponent } from '../component/event-list/event-list.component';
 
 export const AngularModuls = [
     ReactiveFormsModule,
@@ -29,5 +32,8 @@ export const AngularModuls = [
 
 export const Components = [
     MessageAlertComponent,
-    LoadingComponent
+    LoadingComponent,
+    EventCardComponent,
+    EventCardEditComponent,
+    EventListComponent
 ]

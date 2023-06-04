@@ -1,3 +1,95 @@
-<div class="padding-15px">
-    <p>create-by-me works!</p>
+<div class="body margin-15px">
+    <h2>Events Create By Me</h2>
+    <app-event-list
+        [title] = "'Incomplete Events'">
+        <div #listItems class="card-list-item" *ngFor="let item of listIncomplete">
+            <app-event-card
+                [id]="item.idevent"
+                [title]="item.name"
+                [description]="item.description"
+                [dateInit]="item.dateInit"
+                [dateEnd]="item.dateEnd"
+                [timeInit]="item.timeInit"
+                [timeEnd]="item.timeEnd"
+                [direction]="'No address detected'"
+                [isUrl]="false"
+                [isClickable]="true"
+                (onClick)="openEventEdit($event)">
+            </app-event-card>
+        </div>
+    </app-event-list>
+    <app-event-list
+        [title] = "'Slope Events'">
+        <div #listItems class="card-list-item" *ngFor="let item of listSlope">
+            <app-event-card
+                [id]="item.idevent"
+                [title]="item.name"
+                [description]="item.description"
+                [dateInit]="item.dateInit"
+                [dateEnd]="item.dateEnd"
+                [timeInit]="item.timeInit"
+                [timeEnd]="item.timeEnd"
+                [direction]="item.direction"
+                [isUrl]="item.isUrl"
+                [isClickable]="true"
+                (onClick)="openEventEdit($event)">
+            </app-event-card>
+        </div>
+    </app-event-list>
+    <app-event-list
+        [title] = "'In Progress Events'">
+        <div #listItems class="card-list-item" *ngFor="let item of listInprogress">
+            <app-event-card
+                [id]="item.idevent"
+                [title]="item.name"
+                [description]="item.description"
+                [dateInit]="item.dateInit"
+                [dateEnd]="item.dateEnd"
+                [timeInit]="item.timeInit"
+                [timeEnd]="item.timeEnd"
+                [direction]="item.direction"
+                [isUrl]="item.isUrl">
+            </app-event-card>
+        </div>
+    </app-event-list>
+    <app-event-list
+        [title] = "'Done Events'">
+        <div #listItems class="card-list-item" *ngFor="let item of listDone">
+            <app-event-card
+                [id]="item.idevent"
+                [title]="item.name"
+                [description]="item.description"
+                [dateInit]="item.dateInit"
+                [dateEnd]="item.dateEnd"
+                [timeInit]="item.timeInit"
+                [timeEnd]="item.timeEnd"
+                [direction]="'Event is done'"
+                [isUrl]="false">
+            </app-event-card>
+        </div>
+    </app-event-list>
+    <app-event-list
+        [title] = "'Cancel Events'">
+        <div #listItems class="card-list-item" *ngFor="let item of listCancel">
+            <app-event-card
+                [id]="item.idevent"
+                [title]="item.name"
+                [description]="item.description"
+                [dateInit]="item.dateInit"
+                [dateEnd]="item.dateEnd"
+                [timeInit]="item.timeInit"
+                [timeEnd]="item.timeEnd"
+                [direction]="'Event is cancel'"
+                [isUrl]="false">
+            </app-event-card>
+        </div>
+    </app-event-list>
 </div>
+<app-event-card-edit
+    *ngIf="eventEditScreen"
+    [eventEdit]="eventSelected"
+    (onClose)="closeEventEdit()"
+    (onError)="onEmitOnError($event)"
+    (onSuccess)="onEmitOnSuccess($event)"
+    (onUpdated)="onReloadList()">
+</app-event-card-edit>

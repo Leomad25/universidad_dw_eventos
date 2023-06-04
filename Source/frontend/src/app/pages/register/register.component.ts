@@ -40,7 +40,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.tokenService.get() != null) {
-      this.tokenService.isValid(this.tokenService.get()).subscribe(
+      this.tokenService.isValid().subscribe(
         (data) => {
           console.log('[auth/register] Token Valid');
           this.router.navigate(['panel']);

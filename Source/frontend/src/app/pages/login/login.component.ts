@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.tokenService.get() != null) {
-      this.tokenService.isValid(this.tokenService.get()).subscribe(
+      this.tokenService.isValid().subscribe(
         (data) => {
           console.log('[auth/login] Token Valid');
           this.router.navigate(['panel']);
