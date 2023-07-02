@@ -113,6 +113,18 @@ CREATE TABLE IF NOT EXISTS `uni_dw_eventos`.`roles_usuarios` (
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
+-- Store procedure `uni_dw_eventos`.`others`
+-- -----------------------------------------------------
+DELIMITER $$
+CREATE PROCEDURE `uni_dw_eventos`.`others.date`()
+BEGIN
+	SELECT
+	  now() as 'now',
+      curdate() as 'curdate',
+      curtime() as 'curtime';
+END $$
+
+-- -----------------------------------------------------
 -- Store procedure `uni_dw_eventos`.`usuarios`
 -- -----------------------------------------------------
 DELIMITER $$
@@ -387,6 +399,13 @@ CALL `uni_dw_eventos`.`roles.create`('asistente', 1);
 
 CALL `uni_dw_eventos`.`usuarios.create`('0000000000', 'admin', 'admin', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4');
 CALL `uni_dw_eventos`.`roles_usuarios.create`(1, 1);
+
+-- Data Dev Help
+CALL `uni_dw_eventos`.`usuarios.create`('0000000001', 'creator', 'creator', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4');
+CALL `uni_dw_eventos`.`roles_usuarios.create`(2, 2);
+CALL `uni_dw_eventos`.`usuarios.create`('0000000002', 'user', 'user', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4');
+CALL `uni_dw_eventos`.`roles_usuarios.create`(3, 3);
+
 
 /*
 -- -----------------------------------------------------

@@ -29,6 +29,23 @@ class SentencesSQL
     }
 }
 
+class OthersSentencesSQL
+{
+    private ?SentencesSQL $sentencesSQL = null;
+
+    public function __construct(SentencesSQL $sentencesSQL)
+    {
+        $this->sentencesSQL = $sentencesSQL;
+    }
+
+    public function getDate(): array|string
+    {
+        $sql = 'CALL `uni_dw_eventos`.`others.date`()';
+        $sentence = $this->sentencesSQL->createSentence($sql);
+        return $this->sentencesSQL->getResult($sentence);
+    }
+}
+
 class UserSentencesSQL
 {
     private ?SentencesSQL $sentencesSQL = null;
