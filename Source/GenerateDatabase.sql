@@ -391,6 +391,56 @@ END $$
 DELIMITER ;
 
 -- -----------------------------------------------------
+-- Store procedure of events
+-- -----------------------------------------------------
+DELIMITER $$
+CREATE PROCEDURE `uni_dw_eventos`.`_events.updateEventStatus`()
+BEGIN
+	-- Status Cancel (0)
+	UPDATE `uni_dw_eventos`.`eventos`
+      SET `estado` = 0
+      WHERE
+        (`estado` = 1) AND
+        (`fecha_inicio` <= CURDATE()) AND
+        (`tiempo_inicio` <= TIME(NOW())) AND
+        (`lugar` IS NULL);
+    -- Status Complite (2)
+    UPDATE `uni_dw_eventos`.`eventos`
+      SET `estado` = 2
+      WHERE
+        (`estado` = 1) AND
+        (`lugar` IS NOT null);
+    -- Status InProces (3)
+    UPDATE `uni_dw_eventos`.`eventos`
+      SET `estado` = 3
+      WHERE
+        (`estado` = 2) AND
+        (CURDATE() BETWEEN `fecha_inicio` AND `fecha_fin`) AND
+        (TIME(NOW()) BETWEEN `tiempo_inicio` AND `tiempo_fin`);
+    -- Status Complite (4)
+    UPDATE `uni_dw_eventos`.`eventos`
+      SET `estado` = 4
+      WHERE
+        (`estado` = 3) AND
+        (CONCAT(`fecha_fin`, ' ', `tiempo_fin`) < NOW());
+END $$
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- Events
+-- -----------------------------------------------------
+-- Enable events
+SET GLOBAL event_scheduler=ON;
+-- Event of update event status
+DELIMITER $$
+CREATE EVENT `uni_dw_eventos`.`actualizar_estado_eventos`
+    ON SCHEDULE EVERY 5 SECOND ON COMPLETION PRESERVE
+DO BEGIN
+	CALL `uni_dw_eventos`.`_events.updateEventStatus`();
+END $$
+DELIMITER ;
+
+-- -----------------------------------------------------
 -- Load basic data
 -- -----------------------------------------------------
 CALL `uni_dw_eventos`.`roles.create`('administrador', 9);
@@ -405,7 +455,11 @@ CALL `uni_dw_eventos`.`usuarios.create`('0000000001', 'creator', 'creator', '03a
 CALL `uni_dw_eventos`.`roles_usuarios.create`(2, 2);
 CALL `uni_dw_eventos`.`usuarios.create`('0000000002', 'user', 'user', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4');
 CALL `uni_dw_eventos`.`roles_usuarios.create`(3, 3);
-
+-- CALL `uni_dw_eventos`.`eventos.create`('evento1', 'evento1', 1, '2023-07-02', '2023-07-02', '19:00:00', '20:00:00');
+-- CALL `uni_dw_eventos`.`eventos.create`('evento2', 'evento2', 1, '2023-07-02', '2023-07-02', '20:00:00', '21:00:00');
+-- CALL `uni_dw_eventos`.`eventos.create`('evento3', 'evento3', 1, '2023-07-02', '2023-07-02', '21:00:00', '22:00:00');
+-- CALL `uni_dw_eventos`.`eventos.create`('evento4', 'evento4', 1, '2023-07-02', '2023-07-02', '22:00:00', '23:00:00');
+-- CALL `uni_dw_eventos`.`eventos.create`('evento5', 'evento5', 1, '2023-07-02', '2023-07-02', '19:00:00', '22:00:00');
 
 /*
 -- -----------------------------------------------------
